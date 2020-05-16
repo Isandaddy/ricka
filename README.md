@@ -11,3 +11,12 @@ use Hero Widget and GestureDetector Widget and GridView.builder
 
 - https://api.flutter.dev/index.html
 - https://medium.com/@quswlals822/flutter-hero-widget-6805296f790f
+
+### 202005016
+
+add search UI appBar
+
+## ref
+
+- https://www.youtube.com/watch?v=FDNitOxpUks
+- https://api.flutter.dev/flutter/material/TextField-class.html

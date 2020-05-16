@@ -17,10 +17,19 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyWidget extends StatelessWidget {
+class MyWidget extends StatefulWidget {
+  @override
+  _MyWidgetState createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
   String imageUrlByKey(int key) {
     return "https://rickandmortyapi.com/api/character/avatar/${key + 1}.jpeg";
   }
+
+  TextEditingController _controller;
+  Icon searchIcon = Icon(Icons.search);
+  Widget title = Text("Rick And Morty");
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +53,47 @@ class MyWidget extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text("Rick And Morty")),
+        actions: <Widget>[
+          IconButton(
+              icon: searchIcon,
+              onPressed: () {
+                setState(() {
+                  if (this.searchIcon.icon == Icons.search) {
+                    this.searchIcon = Icon(Icons.cancel);
+                    this.title = TextField(
+                      controller: _controller,
+                      onSubmitted: (String value) async {
+                        await showDialog<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Thanks!'),
+                              content: Text('You typed "$value".'),
+                              actions: <Widget>[
+                                FlatButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.0,
+                      ),
+                    );
+                  } else {
+                    this.searchIcon = Icon(Icons.search);
+                    this.title = Text("Rick And Morty");
+                  }
+                });
+              })
+        ],
+        title: title,
       ),
       body: Center(
         child: gridBuilder,
